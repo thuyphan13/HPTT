@@ -1,3 +1,3 @@
-# DA_HDH_NHUNG ThuyPhan13
-# xây dựng hệ thống quản lý văn phòng sử dụng phương thức nhận diện khuôn mặt
+# HPTT 
+# xây dựng hệ thống quản lý môi trường sử dụng esp32 và esp8266
 # 

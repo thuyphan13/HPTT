@@ -18,18 +18,9 @@ document.querySelector('#but2').addEventListener('click',()=> {
     }
 })
 
-// function khiGas() {
-//     const x = document.getElementById("kg").value
-//     if(x >=50){
-//         kg.style.backgroundColor = "red";
-//         confirm('Lượng khí gas quá lớn!');
-//     }        
-// }
-
 
 //biểu đồ
 
-const myNodeList = document.querySelectorAll('p');
 
 const ctx = document.getElementById('myChart').getContext('2d');
 const data = {
@@ -84,17 +75,6 @@ const config = {
     },
 };
 
-// function autoLed(as){
-//     if( as >900){
-//         socket.emit('led', 'on');
-//         document.getElementById('but1').src = './img/den_bat.png'
-//     }
-//     else{
-//         socket.emit('led', 'off');
-//         document.getElementById('but2').src = './img/den_tat.png'
-//     }
-// }
-
 
 Chart.defaults.color = '#000';
 const sensorsChart = new Chart(ctx, config);
@@ -110,15 +90,15 @@ const handlingData = arr => {
   data.datasets[3].data.push(dataSS[3]);
   data.datasets[3].data.length === 13 && data.datasets[3].data.shift();
   
-  myNodeList[0].textContent = dataSS[0] + '°C';
-  myNodeList[1].textContent = dataSS[1] + '%';
-  myNodeList[2].textContent = dataSS[2] + 'lux';
-  myNodeList[3].textContent = dataSS[3] + '%';
+//   myNodeList[0].textContent = dataSS[0] 
+//   myNodeList[1].textContent = dataSS[1] + '%';
+//   myNodeList[2].textContent = dataSS[2] + 'lux';
+//   myNodeList[3].textContent = dataSS[3] + '%';
 
-  document.getElementById("randomNhietDo").innerHTML = dataSS[0]
-  document.getElementById("randomDoAm").innerHTML = dataSS[1]
-  document.getElementById("randomAnhSang").innerHTML = dataSS[2]
-  document.getElementById("randomKhi").innerHTML = dataSS[3]
+  document.getElementById("col1").innerHTML = dataSS[0] + '°C';
+  document.getElementById("col2").innerHTML = dataSS[1]
+  document.getElementById("col3").innerHTML = dataSS[2]
+  document.getElementById("col4").innerHTML = dataSS[3]
 
   changeNhietDo(dataSS[0])
   changeDoAm(dataSS[1])

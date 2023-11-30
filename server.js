@@ -19,11 +19,11 @@ client.on('connect', () => {
     console.log('MQTT connected!!');
 });
 const sensors = 'sensorData'
-const led = 'LED'
+const led = 'den'
 client.subscribe(sensors, () => {
     client.on('message', (topic, message, packet) => {
         console.log(message.toString());
-        io.sockets.emit('updateSensor', message.toString().split(' '))
+        io.sockets.emit('updateSensor', message.toString().split('  '))
         // insertTB(`'${topic}', ${message.toString().split(' ')}`);
     });
 });

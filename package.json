@@ -14,6 +14,7 @@
   "version": "1.0.0",
   "description": "mcb , btl",
   "main": "server.js",
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CuuvuivevaSoixam/MCB.git"

@@ -1,4 +1,7 @@
 // Device control
+setInterval(function(){
+
+},2000);
 let lightOnNoti='Bạn có muốn bật đèn không?'
 let lightOffNoti='Bạn có muốn tắt đèn không?'
 document.querySelector('#but1').addEventListener('click',()=> {
@@ -18,18 +21,7 @@ document.querySelector('#but2').addEventListener('click',()=> {
     }
 })
 
-// function khiGas() {
-//     const x = document.getElementById("kg").value
-//     if(x >=50){
-//         kg.style.backgroundColor = "red";
-//         confirm('Lượng khí gas quá lớn!');
-//     }        
-// }
-
-
 //biểu đồ
-
-const myNodeList = document.querySelectorAll('p');
 
 const ctx = document.getElementById('myChart').getContext('2d');
 const data = {
@@ -58,7 +50,7 @@ const data = {
         },
         {
             type: 'line',
-            label: 'CO2',
+            label: 'Co2',
             data: [],
             backgroundColor: '#4248EE',
             borderColor: '#4248EE',
@@ -78,120 +70,113 @@ const config = {
             },
             title: {
                 display: true,
-                text: 'BIỂU ĐỒ GHI NHẬN DỮ LIỆU TRỰC TIẾP NHIỆT ĐỘ, ĐỘ ẨM, ÁNH SÁNG VÀ LƯỢNG KHÍ CO2',
+                text: 'DATA UPDATE REALTIME',
             },
         },
     },
 };
 
-// function autoLed(as){
-//     if( as >900){
-//         socket.emit('led', 'on');
-//         document.getElementById('but1').src = './img/den_bat.png'
+// function auto(nd,da){
+//     if(nd>29 && da>67){
+//         socket.emit('led', 'on')
+//         document.querySelector('#led').src='./img/den_bat.png'
 //     }
 //     else{
-//         socket.emit('led', 'off');
-//         document.getElementById('but2').src = './img/den_tat.png'
+//         socket.emit('led','off')
+//         document.querySelector('#led').src='./img/den_tat.png'
 //     }
 // }
-
+// auto();
 
 Chart.defaults.color = '#000';
 const sensorsChart = new Chart(ctx, config);
-const handlingData = arr => {
-  const dataSS = arr.map(data => Number(data));
- 
-  data.datasets[0].data.push(dataSS[0]);
-  data.datasets[0].data.length === 13 && data.datasets[0].data.shift();
-  data.datasets[1].data.push(dataSS[1]);
-  data.datasets[1].data.length === 13 && data.datasets[1].data.shift();
-  data.datasets[2].data.push(dataSS[2]);
-  data.datasets[2].data.length === 13 && data.datasets[2].data.shift();
-  data.datasets[3].data.push(dataSS[3]);
-  data.datasets[3].data.length === 13 && data.datasets[3].data.shift();
-  
-  myNodeList[0].textContent = dataSS[0] + '°C';
-  myNodeList[1].textContent = dataSS[1] + '%';
-  myNodeList[2].textContent = dataSS[2] + 'lux';
-  myNodeList[3].textContent = dataSS[3] + '%';
+setInterval(function(handlingData){
 
-  document.getElementById("randomNhietDo").innerHTML = dataSS[0]
-  document.getElementById("randomDoAm").innerHTML = dataSS[1]
-  document.getElementById("randomAnhSang").innerHTML = dataSS[2]
-  document.getElementById("randomKhi").innerHTML = dataSS[3]
+    const handlingData = arr => {
+    const dataSS = arr.map(data => Number(data));
+    
+    data.datasets[0].data.push(dataSS[0]);
+    data.datasets[0].data.length === 13 && data.datasets[0].data.shift();
+    data.datasets[1].data.push(dataSS[1]);
+    data.datasets[1].data.length === 13 && data.datasets[1].data.shift();
+    data.datasets[2].data.push(dataSS[2]);
+    data.datasets[2].data.length === 13 && data.datasets[2].data.shift();
+    data.datasets[3].data.push(dataSS[3]);
+    data.datasets[3].data.length === 13 && data.datasets[3].data.shift();
+    
+    document.getElementById("col1").innerHTML = dataSS[0] + '°C'
+    document.getElementById("col2").innerHTML = dataSS[1] + '%'
+    document.getElementById("col3").innerHTML = dataSS[2] + ' lux'
+    document.getElementById("col4").innerHTML = dataSS[3]
 
-  changeNhietDo(dataSS[0])
-  changeDoAm(dataSS[1])
-  changeAnhSang(dataSS[2])
-  changeKhi(dataSS[3])
-//   autoLed(dataSS[2])
 
-  const day = new Date();
-  let time = `${day.getHours()}:${day.getMinutes()}:${day.getSeconds()}`;
-  data.labels.push(time);
-  data.labels.length === 13 && data.labels.shift();
-  sensorsChart.update();
-};
+        changeNhietDo(dataSS[0])
+        changeDoAm(dataSS[1])
+        changeAnhSang(dataSS[2])
+        changeKhi(dataSS[3])
 
-function changeNhietDo(nd){               
-    if(nd<20){
-      document.getElementById('temp').style.background='#f3fcfa';
-    }else if(nd<40){
-      document.getElementById('temp').style.background='#93cbbf';
-    }else if(nd<60){
-      document.getElementById('temp').style.background='#9be0d3';
-    }else if(nd<80){
-      document.getElementById('temp').style.background='#52b6a3';
-    }else {
-      document.getElementById('temp').style.background='#158772';
+
+    const day = new Date();
+    let time = `${day.getHours()}:${day.getMinutes()}:${day.getSeconds()}`;
+    data.labels.push(time);
+    data.labels.length === 13 && data.labels.shift();
+    sensorsChart.update();
+    };
+
+    function changeNhietDo(nd){               
+        if(nd<20){
+        document.getElementById('temp').style.background='#f3fcfa';
+        }else if(nd<40){
+        document.getElementById('temp').style.background='#93cbbf';
+        }else if(nd<60){
+        document.getElementById('temp').style.background='#9be0d3';
+        }else {
+        document.getElementById('temp').style.background='#158772';
+        alert('Nhiet do cao qua'); 
+        }
+    }
+            
+    function changeDoAm(da){
+        if(da<20){
+            document.getElementById('hum').style.background = '#f3fcfa'
+        } else if(da<40){
+            document.getElementById('hum').style.background = '#93cbbf'
+        } else if(da<60){
+            document.getElementById('hum').style.background = '#9be0d3'
+        } else if(da<80){
+            document.getElementById('hum').style.background = '#52b6a3'
+        } else if(da<100){
+            document.getElementById('hum').style.background = '#158772'
+        }	
+    }
+
+    function changeAnhSang(as){
+        if(as<200){
+            document.getElementById('light').style.background = '#f3fcfa'
+        } else if(as<500){
+            document.getElementById('light').style.background = '#93cbbf'
+        } else if(as<600){
+            document.getElementById('light').style.background = '#9be0d3'
+        } else if(as<800){
+            document.getElementById('light').style.background = '#52b6a3'
+        } else if(as<1000){
+            document.getElementById('light').style.background = '#158772'
+        }	
+    }
+            
+    function changeKhi(kg){
+        if(kg<48){
+            document.getElementById('co2').style.background = '#93cbbf'
+        } else if(kg>48){
+            document.getElementById('co2').style.background = '#fd0000'
+            alert('Có nguy cơ hỏa hoạn!!! Khẩn cấp !'); 
     }
 }
-        
-function changeDoAm(da){
-    if(da<20){
-        document.getElementById('hum').style.background = '#f3fcfa'
-    } else if(da<40){
-        document.getElementById('hum').style.background = '#93cbbf'
-    } else if(da<60){
-        document.getElementById('hum').style.background = '#9be0d3'
-    } else if(da<80){
-        document.getElementById('hum').style.background = '#52b6a3'
-    } else if(da<100){
-        document.getElementById('hum').style.background = '#158772'
-    }	
-}
-
-function changeAnhSang(as){
-    if(as<200){
-        document.getElementById('light').style.background = '#f3fcfa'
-    } else if(as<500){
-        document.getElementById('light').style.background = '#93cbbf'
-    } else if(as<600){
-        document.getElementById('light').style.background = '#9be0d3'
-    } else if(as<800){
-        document.getElementById('light').style.background = '#52b6a3'
-    } else if(as<1000){
-        document.getElementById('light').style.background = '#158772'
-    }	
-}
-         
-function changeKhi(kg){
-    if(kg<20){
-        document.getElementById('co2').style.background = '#f3fcfa'
-    } else if(kg<40){
-        document.getElementById('co2').style.background = '#93cbbf'
-    } else if(kg<60){
-        document.getElementById('co2').style.background = '#9be0d3'
-    } else if(kg<80){
-        document.getElementById('co2').style.background = '#52b6a3'
-    } else if(kg<100){
-        document.getElementById('co2').style.background = '#158772'
-    }	
-}
-
+}, 2000);
 // Socket IO
 
 const socket = io();
+// setInterval(handlingData(msg), 2000);
 
 socket.on('updateSensor', msg => {     //lang nghe du lieu tu mqtt
     console.log(msg);
